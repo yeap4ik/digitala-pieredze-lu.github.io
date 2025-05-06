@@ -5,18 +5,111 @@
   <title>LU digitālās studentu kopienas</title>
   <meta name="description" content="LU studentu digitālās kopienas, piemēram, Discord un WhatsApp grupas, kur studenti apmainās ar informāciju un atbalsta viens otru.">
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    nav a { margin-right: 10px; }
-    footer { margin-top: 40px; }
+     body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background-color: #1976d2;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #1976d2;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      padding: 40px 20px;
+    background-color: white;
+}
+
+.text, .image {
+    flex: 1 1 300px;
+    max-width: 500px;
+    margin: 10px;
+  }
+
+  .text p {
+    text-align: justify;
+    line-height: 1.6;
+  }
+
+  .image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+
+  footer {
+    background-color: #1976d2;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+  }
+
+  footer a {
+    color: white;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  footer .contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+    .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+
+.image, .text {
+  flex: 1 1 300px;
+  max-width: 800px;
+  margin: 10px;
+}
+
+.text p {
+  text-align: justify;
+  line-height: 1.6;
+}
   </style>
 </head>
 <body>
+  <header>
     <h1>LU digitālās studentu kopienas (Discord, WhatsApp)</h1>
-    <p>Latvijas Universitātē studentu savstarpējā saziņa pārsvarā notiek digitālajās platformās. Katram kursam un pat dažiem konkrētiem priekšmetiem ir savas WhatsApp grupas vai Discord serveri, kur studenti apmainās ar informāciju, jautā un dalās pieredzē.</p>
-    <p>Šajās kopienās tiek risinātas praktiskas problēmas, piemēram, kur atrast konkrēta pasniedzēja materiālus, kā pareizi noformēt darbus, vai kad notiek pārbaudes darbi. Bieži vien tieši studenti ir viens otram vislielākais atbalsts.</p>
-    <p>Discord serveros bieži notiek arī neformāla saziņa un pat spēļu vakari. Tas palīdz justies kā daļai no lielākas kopienas — pat ja mācības notiek attālināti. Šāda digitālā tuvība kļūst par svarīgu sociālā atbalsta avotu studiju laikā.</p>
-  
+  </header>
+
   <nav>
+    <a href="klades.html">← Iepriekšējā</a>
     <a href="index.html">Uz sākumu</a>
     <a href="klades.html">1. Klades</a>
     <a href="kopienas.html">2. Kopienas</a>
@@ -25,8 +118,31 @@
     <a href="nakotne.html">5. Nākotne</a>
   </nav>
 
+  <div class="content">
+    <div class="row">
+      <div class="image">
+        <img src="discord_img.png" alt="Datorikas fakultātes diskorda servera attēls">
+      </div>
+      <div class="text">
+        <p>Latvijas Universitātē studentu savstarpējā saziņa pārsvarā notiek digitālajās platformās. Katram kursam un pat dažiem konkrētiem priekšmetiem ir savas WhatsApp grupas vai Discord serveri, kur studenti apmainās ar informāciju, jautā un dalās pieredzē.</p>
+        <p>Šajās kopienās tiek risinātas praktiskas problēmas, piemēram, kur atrast konkrēta pasniedzēja materiālus, kā pareizi noformēt darbus, vai kad notiek pārbaudes darbi. Bieži vien tieši studenti ir viens otram vislielākais atbalsts.</p>
+      </div>
+    </div>
+
+    <div class="row reverse">
+      <div class="text">
+        <p>Discord serveros bieži notiek arī neformāla saziņa un pat spēļu vakari. Tas palīdz justies kā daļai no lielākas kopienas — pat ja mācības notiek attālināti. Šāda digitālā tuvība kļūst par svarīgu sociālā atbalsta avotu studiju laikā.</p>
+      </div>
+      <div class="image">
+        <img src="whatsapp_img.png" alt="Datorikas fakultātes whatsapp grupa">
+      </div>
+    </div>
+  </div>
+
   <footer>
-    <a href="klades.html">← Iepriekšējā</a> |
+    <div class="contact">
+      <span>Kontakti | ✉</span> <a href="mailto:sr19062@edu.lu.lv">sr19062@edu.lu.lv</a>
+    </div>
     <a href="komunikacija.html">Nākamā →</a>
   </footer>
 </body>
