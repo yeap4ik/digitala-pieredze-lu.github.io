@@ -1,17 +1,8 @@
     document.addEventListener("DOMContentLoaded", () => {
     const content = document.getElementById("dynamic-content");
-    const loader = document.getElementById("loader");
 
     const pages = ["klades", "kopienas", "komunikacija", "detoksikacija", "nakotne"];
     let currentIndex = 0;
-
-    function showLoader() {
-    loader.style.display = "block";
-}
-
-    function hideLoader() {
-    loader.style.display = "none";
-}
 
     function setupNextButtons() {
     const nextButtons = content.querySelectorAll(".next-fragment");
@@ -29,7 +20,6 @@
     async function loadFragment(index) {
     if (index >= pages.length) return;
 
-    showLoader();
     try {
     const page = pages[index];
     const res = await fetch(`fragments/${page}.html`);
@@ -47,7 +37,6 @@
 } catch (err) {
     content.innerHTML += "<p>Kļūda ielādējot lapu.</p>";
 } finally {
-    hideLoader();
 }
 }
 
