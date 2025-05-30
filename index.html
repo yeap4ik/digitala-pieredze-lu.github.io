@@ -5,6 +5,10 @@
   <title>Mana digitālā pieredze LU</title>
   <meta name="description" content="LU students mikroblogā dalās ar savu digitālo pieredzi, lai palīdzētu nākamajiem studentiem sagatavoties digitālajām studijām.">
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -29,7 +33,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      flex: 1;
     }
 
     .hero img {
@@ -66,6 +69,7 @@
       font-size: 18px;
       font-weight: bold;
       text-decoration: none;
+      cursor: pointer;
       transition: all 0.3s;
     }
 
@@ -74,29 +78,155 @@
       color: white;
     }
 
-    @media (max-width: 600px) {
-      .button-container {
-        justify-content: center;
-        padding-right: 0;
-      }
+    #dynamic-content {
+      margin-top: 40px;
+    }
+
+    header {
+      background-color: #1976d2;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #1976d2;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      padding: 40px 20px;
+      background-color: white;
+    }
+
+    .text, .image {
+      flex: 1 1 300px;
+      max-width: 500px;
+      margin: 10px;
+    }
+
+    .text p {
+      text-align: justify;
+      line-height: 1.6;
+    }
+
+    .image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    footer {
+      background-color: #1976d2;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    footer .contact {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+
+    .image, .text {
+      flex: 1 1 300px;
+      max-width: 500px;
+      margin: 10px;
+    }
+
+    .text p {
+      text-align: justify;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <header>
-    MANA DIGITĀLĀ PIEREDZE MĀCOTIES LATVIJAS UNIVERSITĀTĒ
-  </header>
+<header>
+  MANA DIGITĀLĀ PIEREDZE MĀCOTIES LATVIJAS UNIVERSITĀTĒ
+</header>
 
-  <div class="hero">
-    <img src="blogpost_digitalexp_2019.png" alt="Digitāla pieredze ilustrācija">
-    
-    <div class="intro-text">
-      Šis ir mikrobloga formāta projekts, kurā Latvijas Universitātes studenti dalās ar savu digitālo pieredzi studiju laikā. Mērķis ir palīdzēt nākamajiem studentiem saprast, kā digitālie rīki, platformas un saziņas veidi ietekmē mācību procesu un ikdienu LU. Šeit atradīsi personīgus stāstus, praktiskus padomus un refleksijas par digitālo vidi universitātē.
-    </div>
+<div class="hero">
+  <img src="blogpost_digitalexp_2019.png" alt="Digitāla pieredze ilustrācija">
 
-    <div class="button-container">
-      <a class="next-button" href="klades.html">Tālāk</a>
-    </div>
+  <div class="intro-text">
+    Šis ir mikrobloga formāta projekts, kurā Latvijas Universitātes studenti dalās ar savu digitālo pieredzi studiju laikā. Mērķis ir palīdzēt nākamajiem studentiem saprast, kā digitālie rīki, platformas un saziņas veidi ietekmē mācību procesu un ikdienu LU. Šeit atradīsi personīgus stāstus, praktiskus padomus un refleksijas par digitālo vidi universitātē.
   </div>
+
+  <div class="button-container">
+    <button class="next-button" id="load-next">Tālāk</button>
+  </div>
+</div>
+
+<!-- Куда подгрузим следующий блок -->
+<div id="dynamic-content"></div>
+
+<script>
+  document.getElementById("load-next").addEventListener("click", function() {
+    fetch("klades.html")
+            .then(response => {
+              if (!response.ok) throw new Error("Network response was not ok");
+              return response.text();
+            })
+            .then(html => {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(html, "text/html");
+
+              // Выбираем только основной контент
+              const content = doc.querySelector(".klade-content");
+
+              if (content) {
+                const container = document.getElementById("dynamic-content");
+
+                // Добавим плавное появление
+                container.style.opacity = 0;
+                container.appendChild(content);
+
+                // Ждём рендер, затем плавно прокручиваем
+                setTimeout(() => {
+                  container.scrollIntoView({ behavior: "smooth" });
+                  container.style.transition = "opacity 1s";
+                  container.style.opacity = 1;
+                }, 100);
+              }
+            })
+            .catch(err => {
+              console.error("Kļūda ielādējot lapu:", err);
+            });
+  });
+</script>
 </body>
 </html>
