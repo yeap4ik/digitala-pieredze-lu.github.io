@@ -191,42 +191,9 @@
   </div>
 </div>
 
-<!-- Куда подгрузим следующий блок -->
+<!-- Loading here new pages -->
 <div id="dynamic-content"></div>
 
-<script>
-  document.getElementById("load-next").addEventListener("click", function() {
-    fetch("klades.html")
-            .then(response => {
-              if (!response.ok) throw new Error("Network response was not ok");
-              return response.text();
-            })
-            .then(html => {
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(html, "text/html");
-
-              // Выбираем только основной контент
-              const content = doc.querySelector(".klade-content");
-
-              if (content) {
-                const container = document.getElementById("dynamic-content");
-
-                // Добавим плавное появление
-                container.style.opacity = 0;
-                container.appendChild(content);
-
-                // Ждём рендер, затем плавно прокручиваем
-                setTimeout(() => {
-                  container.scrollIntoView({ behavior: "smooth" });
-                  container.style.transition = "opacity 1s";
-                  container.style.opacity = 1;
-                }, 100);
-              }
-            })
-            .catch(err => {
-              console.error("Kļūda ielādējot lapu:", err);
-            });
-  });
-</script>
+<script src="js/scroll.js"></script>
 </body>
 </html>
