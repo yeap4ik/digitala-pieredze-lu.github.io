@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8">
+  <title>Mana digitālā pieredze LU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- GSAP CDN -->
+  <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .section {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .intro {
+      background-color: #1976d2;
+      color: white;
+      text-align: center;
+    }
+
+    .intro h1 {
+      font-size: 2em;
+      max-width: 700px;
+      margin: 20px;
+    }
+
+    .next-button {
+      background-color: white;
+      color: #1976d2;
+      border: 2px solid #1976d2;
+      border-radius: 25px;
+      padding: 10px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 30px;
+      transition: all 0.3s;
+    }
+
+    .next-button:hover {
+      background-color: #1976d2;
+      color: white;
+    }
+
+    .spacer {
+      height: 200vh; /* нужно для прокрутки */
+      background-color: #f4f4f4;
+    }
+
+    .zoom-section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: scale(0.5);
+      opacity: 0;
+
+      background-image: url('images/IMG_20250531_145408_112.jpg'); /* замените на свой путь */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      color: #333;
+      text-align: center;
+      padding: 60px 20px;
+      box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.65); /* светлая дымка поверх */
+    }
+
+    .zoom-section h2 {
+      font-size: 24px;
+      text-align: center;
+      margin: 0 0 20px 0;
+    }
+
+    .zoom-section p {
+      max-width: 800px;
+      padding: 0 20px;
+      font-size: 18px;
+      line-height: 1.5;
+      text-align: justify;
+    }
+
+    .author-photo img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #36f613;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .content {
+      padding: 40px 20px;
+      background-color: white;
+    }
+
+    .text, .image {
+      flex: 1 1 300px;
+      max-width: 500px;
+      margin: 10px;
+    }
+
+    .text p {
+      text-align: justify;
+      line-height: 1.6;
+    }
+
+    .image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    footer {
+      background-color: #1976d2;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    footer .contact {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+
+    .image, .text {
+      flex: 1 1 300px;
+      max-width: 500px;
+      margin: 10px;
+    }
+
+    .text p {
+      text-align: justify;
+      line-height: 1.6;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- Static Intro Section -->
+<div class="section intro">
+  <div class="author-photo">
+    <img src="_2.0-4467.jpg" alt="Autora foto">
+  <h1>Sveicināts, lasitājs! <br> Mani sauc Sergejs Rakovskis <br> un ši ir mana digitālā pieredze mācoties<br>Latvijas Universitātē</h1>
+  <a class="next-button" href="#">Tālāk</a>
+</div>
+</div>
+
+<!-- Spacer 1 -->
+<div class="spacer"></div>
+
+<!-- Zoom-in Section 1 -->
+<div class="zoom-section">
+  <h2>Mana digitālā pieredze mācoties<br>Latvijas Universitātē</h2>
+  <p>Šis ir mikrobloga formāta projekts, kurā Latvijas Universitātes EZTF datorikas nodaļas students dalās ar savu digitālo pieredzi studiju laikā.</p>
+  <p>Mērķis ir palīdzēt nākamajiem un topošiem studentiem uzzināt vairāk un saprast, kā digitālie rīki, platformas un saziņas veidi ietekmē mācību procesu un atvieglo ikdienu Latvijas Universitātē.</p>
+  <p>Nākamajās lapās tiek apkopoti stāsti un pieredzes, kā arī tēmas, kuras autors uzskata par nozīmīgām un noderīgām, īpaši gatavojoties iestājai Latvijas Universitātē.</p>
+</div>
+
+<!-- Spacer 2 -->
+<div class="spacer"></div>
+
+<!-- Zoom-in Section 2 -->
+<div class="zoom-section">
+  <div class="content">
+    <div class="row">
+      <div class="image">
+        <img src="paper_img.png" alt="Papīra klade">
+      </div>
+      <div class="text">
+        <p>Studiju sākumā es joprojām izmantoju papīra klades, taču diezgan ātri sapratu, ka digitālā piezīmju veikšana ir ērtāka un efektīvāka. Es sāku izmantot rīkus kā OneNote, Google Docs un Notion, lai organizētu lekciju materiālus.</p>
+        <p>Digitālās klades ļauj man izmantot meklēšanas funkciju, pievienot saites uz mācību materiāliem, kopīgot piezīmes ar kursabiedriem un piekļūt tām no jebkuras ierīces. Tas ir īpaši noderīgi eksāmenu laikā, kad laiks ir ierobežots.</p>
+      </div>
+    </div>
+
+    <div class="row reverse">
+      <div class="text">
+        <p>Tomēr ir arī izaicinājumi — piemēram, ilgs laiks pie ekrāna nogurdina, un dažkārt rakstot ar roku idejas nostiprinās labāk. Tāpēc es cenšos sabalansēt abas pieejas, izmantojot papīru refleksijām un digitālos rīkus strukturētai informācijai.</p>
+      </div>
+      <div class="image">
+        <img src="digital_img.png" alt="Digitāla klade uz planšetes">
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="contact">
+      <span>Kontakti | ✉</span> <a href="mailto:sr19062@edu.lu.lv">sr19062@edu.lu.lv</a>
+    </div>
+    <a href="kopienas.html">Nākamā →</a>
+  </footer>
+</div>
+
+<style>
+  .zoom-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.5);
+    opacity: 0;
+    background: white;
+    color: #333;
+    text-align: center;
+    padding: 60px 20px;
+    box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.65);
+  }
+
+  .zoom-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .zoom-section p {
+    max-width: 800px;
+    font-size: 18px;
+    text-align: justify;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .spacer {
+    height: 200vh;
+    background-color: #f4f4f4;
+  }
+</style>
+
+<script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const zoomSections = document.querySelectorAll(".zoom-section");
+  const spacers = document.querySelectorAll(".spacer");
+
+  zoomSections.forEach((section, i) => {
+    gsap.to(section, {
+      scrollTrigger: {
+        trigger: spacers[i],
+        start: "top bottom",
+        end: "top top",
+        scrub: true,
+      },
+      scale: 1,
+      opacity: 1,
+      ease: "power2.out"
+    });
+  });
+</script>
+
+</body>
+</html>
