@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.section {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.intro {
+    background-color: #1976d2;
+    color: white;
+    text-align: center;
+}
+
+.intro h1 {
+    font-size: 2em;
+    max-width: 700px;
+    margin: 20px;
+}
+
+.next-button {
+    background-color: white;
+    color: #1976d2;
+    border: 2px solid #1976d2;
+    border-radius: 25px;
+    padding: 10px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 30px;
+    transition: all 0.3s;
+}
+
+.next-button:hover {
+    background-color: #1976d2;
+    color: white;
+}
+
+.spacer {
+    height: 200vh; /* нужно для прокрутки */
+    background-color: #f4f4f4;
+}
+
+.zoom-section {
+    /* УДАЛИ или закомментируй это: */
+    /* position: fixed;
+    top: 0;
+    left: 0; */
+
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transform: scale(0.1);
+    opacity: 0;
+
+    background-image: url('images/IMG_20250531_145408_112.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: #333;
+    text-align: center;
+    padding: 60px 20px;
+    box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.65);
+}
+
+
+.zoom-section h2, .zoom-section2 h2 {
+    font-size: 24px;
+    text-align: center;
+    margin: 0 0 20px 0;
+}
+
+.zoom-section p {
+    max-width: 800px;
+    padding: 0 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+.author-photo img {
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #36f613;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
