@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mana digitālā pieredze LU</title>
+  <meta name="description" content="LU students mikroblogā dalās ar savu digitālo pieredzi, lai palīdzētu nākamajiem studentiem sagatavoties digitālajām studijām.">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #1976d2;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .hero {
+      background-color: white;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero img {
+      width: 90%;
+      max-width: 800px;
+      height: auto;
+      border: 3px solid black;
+      object-fit: cover;
+      margin-bottom: 30px;
+    }
+
+    .intro-text {
+      max-width: 700px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #333;
+      text-align: justify;
+      margin-bottom: 40px;
+    }
+
+    .button-container {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 40px;
+    }
+
+    .next-button {
+      background-color: white;
+      color: #1976d2;
+      border: 2px solid #1976d2;
+      border-radius: 25px;
+      padding: 10px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .next-button:hover {
+      background-color: #1976d2;
+      color: white;
+    }
+
+    /*#dynamic-content {*/
+    /*  margin-top: 40px;*/
+    /*}*/
+
+    header {
+      background-color: #1976d2;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #1976d2;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      padding: 40px 20px;
+      background-color: white;
+    }
+
+    .text, .image {
+      flex: 1 1 300px;
+      max-width: 500px;
+      margin: 10px;
+    }
+
+    .text p {
+      text-align: justify;
+      line-height: 1.6;
+    }
+
+    .image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    footer {
+      background-color: #1976d2;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    footer .contact {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+
+    .image, .text {
+      flex: 1 1 300px;
+      max-width: 500px;
+      margin: 10px;
+    }
+
+    .text p {
+      text-align: justify;
+      line-height: 1.6;
+    }
+
+    #progress-indicator {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      box-shadow: 0 0 5px #ccc;
+      z-index: 1000;
+    }
+
+    #fixed-nav {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      box-shadow: 0 0 5px #ccc;
+      z-index: 1000;
+    }
+
+    #progress-circle-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s ease;
+    }
+
+    #progress-circle {
+      /*transform: rotate(-180deg); !* начало с верхней точки *!*/
+    }
+
+    .hero-background {
+      background-image: url('blogpost_digitalexp_2019.png'); /* ваш фон */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      padding: 60px 20px;
+    }
+
+    .hero-background::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(255, 255, 255, 0.7); /* полупрозрачность */
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 0 auto;
+      gap: 40px;
+    }
+
+    .author-photo img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #1976d2;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+    .author-photo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .author-greeting {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #1976d2;
+      font-weight: bold;
+    }
+
+    .intro-text {
+      max-width: 600px;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #333;
+      text-align: justify;
+    }
+
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+  </style>
+</head>
+<body>
+<header>
+  MANA DIGITĀLĀ PIEREDZE MĀCOTIES LATVIJAS UNIVERSITĀTĒ
+</header>
+
+<!--<div class="hero">-->
+<!--  <img src="blogpost_digitalexp_2019.png" alt="Digitāla pieredze ilustrācija">-->
+
+  <div class="hero-background">
+    <div class="hero-content">
+      <div class="author-photo">
+        <img src="_2.0-4467.jpg" alt="Autora foto">
+        <div class="author-greeting">Čau! Mani sauc Sergejs Rakovskis!</div>
+      </div>
+      <div class="intro-text">
+
+        <div class="intro-text">
+          <p> Šis ir mirkobloga formāta projekts, kura Latvijas Universitātes EZTF datorikas nodaļas students dalās ar savu digitālo pieredzi studiju laikā.
+          </p>
+          <br>
+          <p>
+            Mērķis ir palīdzēt nākamajiem un topošiem studentiem uzzināt vairāk un saprast, kā digitālie rīki, platformas un saziņas veidi ietekmē mācību procesu un atvieglo ikdienu Latvijas Universitātē.
+          </p>
+          <br>
+          <p>
+            Nākamajās lapās tiek apkopoti stāsti un pieredzes, kā arī tēmas, kuras autors uzskata par nozīmīgām un noderīgām, īpaši gatavojoties iestājai Latvijas Universitātē.
+          </p>
+
+  </div>
+
+  <!-- Фиксированная навигация -->
+  <div id="fixed-nav">
+    <a href="index4.html">← Uz sākumu</a>
+  </div>
+  <div class="button-container">
+    <button class="next-button" id="load-next">Tālāk</button>
+  </div>
+</div>
+  </div>
+  </div>
+
+<!-- Круглый прогресс -->
+<div id="progress-circle-container">
+  <svg id="progress-circle" width="60" height="60">
+    <circle cx="30" cy="30" r="26" stroke="#e0e0e0" stroke-width="6" fill="none"/>
+    <circle id="progress-bar" cx="30" cy="30" r="26" stroke="#4caf50" stroke-width="6" fill="none"
+            stroke-linecap="round" stroke-dasharray="163.36" stroke-dashoffset="163.36" />
+    <text id="progress-text" x="30" y="34" text-anchor="middle" font-size="14" fill="#333">0%</text>
+  </svg>
+</div>
+
+
+
+<!-- Loading here new pages -->
+<div id="dynamic-content"></div>
+
+<script src="js/scroll.js"></script>
+</body>
+</html>
