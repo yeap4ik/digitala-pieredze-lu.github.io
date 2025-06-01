@@ -57,6 +57,11 @@
             z-index: 1;
             opacity: 0.3;
         }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
     </style>
 
 </head>
@@ -71,7 +76,7 @@
 
 <nav id="desktop-nav">
     <button onclick="showCard(99)">← Iepriekšējā</button>
-    <button onclick="showCard(10)">Uz sākumu</button>
+    <button onclick="showCard(10)" id="backToIndexButton">Uz sākumu</button>
     <button onclick="showCard(1)">1. Klades</button>
     <button onclick="showCard(2)">2. Kopienas</button>
     <button onclick="showCard(3)">3. Komunikācija</button>
@@ -276,7 +281,14 @@
     }, 2200); // saskaņots ar .intro-text animāciju ilgumu
     });
 
+    document.getElementById("backToIndexButton").addEventListener("click", function (e) {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
 
+        setTimeout(function () {
+            window.location.href = "index.html";
+        }, 1000);
+    });
 </script>
 
 </body>
