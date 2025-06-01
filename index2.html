@@ -1,304 +1,282 @@
 <!DOCTYPE html>
 <html lang="lv">
 <head>
-  <meta charset="UTF-8">
-  <title>Mana digitālā pieredze LU</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Klades — pāreja no papīra uz digitālo</title>
+    <meta name="description" content="LU students apraksta pāreju no papīra kladēm uz digitāliem rīkiem kā OneNote un Notion studiju laikā.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="kladesStyle.css">
 
-  <!-- GSAP CDN -->
-  <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
-  <script src="https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            height: 100%;
+            overflow-x: hidden;
+        }
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+        .card-container {
+            height: 100vh;
+            width: 100%;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            perspective: 1px;
+            transform-style: preserve-3d;
+        }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-    }
+        .card {
+            scroll-snap-align: start;
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
 
-    .section {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      position: relative;
-    }
+        .card .content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            box-sizing: border-box;
+            transform: translateZ(0); /* Foreground layer */
+            z-index: 2;
+        }
 
-    .intro {
-      background-color: #1976d2;
-      color: white;
-      text-align: center;
-    }
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 120%;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            transform: translateZ(-1px) scale(2); /* Background parallax layer */
+            z-index: 1;
+            opacity: 0.3;
+        }
+    </style>
 
-    .intro h1 {
-      font-size: 2em;
-      max-width: 700px;
-      margin: 20px;
-    }
-
-    .next-button {
-      background-color: white;
-      color: #1976d2;
-      border: 2px solid #1976d2;
-      border-radius: 25px;
-      padding: 10px 30px;
-      font-size: 18px;
-      font-weight: bold;
-      text-decoration: none;
-      margin-top: 30px;
-      transition: all 0.3s;
-    }
-
-    .next-button:hover {
-      background-color: #1976d2;
-      color: white;
-    }
-
-    .spacer {
-      height: 200vh; /* нужно для прокрутки */
-      background-color: #f4f4f4;
-    }
-
-    .zoom-section {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transform: scale(0.5);
-      opacity: 0;
-
-      background-image: url('images/IMG_20250531_145408_112.jpg'); /* замените на свой путь */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-
-      color: #333;
-      text-align: center;
-      padding: 60px 20px;
-      box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.65); /* светлая дымка поверх */
-    }
-
-    .zoom-section h2 {
-      font-size: 24px;
-      text-align: center;
-      margin: 0 0 20px 0;
-    }
-
-    .zoom-section p {
-      max-width: 800px;
-      padding: 0 20px;
-      font-size: 18px;
-      line-height: 1.5;
-      text-align: justify;
-    }
-
-    .author-photo img {
-      width: 220px;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 4px solid #36f613;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .content {
-      padding: 40px 20px;
-      background-color: white;
-    }
-
-    .text, .image {
-      flex: 1 1 300px;
-      max-width: 500px;
-      margin: 10px;
-    }
-
-    .text p {
-      text-align: justify;
-      line-height: 1.6;
-    }
-
-    .image img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 5px;
-    }
-
-    footer {
-      background-color: #1976d2;
-      color: white;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: bold;
-    }
-
-    footer a {
-      color: white;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    footer .contact {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 20px 0;
-    }
-
-
-    .image, .text {
-      flex: 1 1 300px;
-      max-width: 500px;
-      margin: 10px;
-    }
-
-    .text p {
-      text-align: justify;
-      line-height: 1.6;
-    }
-
-  </style>
 </head>
 <body>
-
-<!-- Static Intro Section -->
-<div class="section intro">
-  <div class="author-photo">
-    <img src="_2.0-4467.jpg" alt="Autora foto">
-  <h1>Sveicināts, lasitājs! <br> Mani sauc Sergejs Rakovskis <br> un ši ir mana digitālā pieredze mācoties<br>Latvijas Universitātē</h1>
-  <a class="next-button" href="#">Tālāk</a>
-</div>
+<div id="intro-screen">
+    <h1 class="intro-text">Mana digitālā pieredze mācoties<br>Latvijas Universitātē</h1>
 </div>
 
-<!-- Spacer 1 -->
-<div class="spacer"></div>
+<header>
+    <h1>KLADES — PĀREJA NO PAPĪRA UZ DIGITĀLO</h1>
+</header>
 
-<!-- Zoom-in Section 1 -->
-<div class="zoom-section">
-  <h2>Mana digitālā pieredze mācoties<br>Latvijas Universitātē</h2>
-  <p>Šis ir mikrobloga formāta projekts, kurā Latvijas Universitātes EZTF datorikas nodaļas students dalās ar savu digitālo pieredzi studiju laikā.</p>
-  <p>Mērķis ir palīdzēt nākamajiem un topošiem studentiem uzzināt vairāk un saprast, kā digitālie rīki, platformas un saziņas veidi ietekmē mācību procesu un atvieglo ikdienu Latvijas Universitātē.</p>
-  <p>Nākamajās lapās tiek apkopoti stāsti un pieredzes, kā arī tēmas, kuras autors uzskata par nozīmīgām un noderīgām, īpaši gatavojoties iestājai Latvijas Universitātē.</p>
+<nav id="desktop-nav">
+    <button onclick="showCard(99)">← Iepriekšējā</button>
+    <button onclick="showCard(10)">Uz sākumu</button>
+    <button onclick="showCard(1)">1. Klades</button>
+    <button onclick="showCard(2)">2. Kopienas</button>
+    <button onclick="showCard(3)">3. Komunikācija</button>
+    <button onclick="showCard(4)">4. Detoksikācija</button>
+    <button onclick="showCard(5)">5. Nākotne</button>
+    <button id="theme-toggle" aria-label="Pārslēgt tēmu">🌙</button>
+</nav>
+
+<button class="mobile-nav-toggle" onclick="toggleMobileMenu()">☰</button>
+<div class="mobile-menu" id="mobileMenu">
+    <button onclick="showCard(99)">← Iepriekšējā</button>
+    <button onclick="showCard(9)">Uz sākumu</button>
+    <button onclick="showCard(1)">1. Klades</button>
+    <button onclick="showCard(2)">2. Kopienas</button>
+    <button onclick="showCard(3)">3. Komunikācija</button>
+    <button onclick="showCard(4)">4. Detoksikācija</button>
+    <button onclick="showCard(5)">5. Nākotne</button>
+    <button onclick="toggleTheme()" id="mobile-theme-toggle">🌙</button>
 </div>
 
-<!-- Spacer 2 -->
-<div class="spacer"></div>
-
-<!-- Zoom-in Section 2 -->
-<div class="zoom-section">
-  <div class="content">
+<div class="card-container">
+<div class="card card1" id="card1" data-title="KLADES — PĀREJA NO PAPĪRA UZ DIGITĀLO">
+<div class="content">
     <div class="row">
-      <div class="image">
-        <img src="paper_img.png" alt="Papīra klade">
-      </div>
-      <div class="text">
-        <p>Studiju sākumā es joprojām izmantoju papīra klades, taču diezgan ātri sapratu, ka digitālā piezīmju veikšana ir ērtāka un efektīvāka. Es sāku izmantot rīkus kā OneNote, Google Docs un Notion, lai organizētu lekciju materiālus.</p>
-        <p>Digitālās klades ļauj man izmantot meklēšanas funkciju, pievienot saites uz mācību materiāliem, kopīgot piezīmes ar kursabiedriem un piekļūt tām no jebkuras ierīces. Tas ir īpaši noderīgi eksāmenu laikā, kad laiks ir ierobežots.</p>
-      </div>
+        <div class="image">
+            <img src="images/IMG20250531175253.jpg" alt="Papīra klade">
+        </div>
+        <div class="text">
+            <p>
+                Visu studiju laikā es, lielākoties, izmantoju papīra klades, jo tā biju pieradis kopš skolas. Papīra klades ir labs veids, kā var ātrāk atcerēties jaunu materiālu, ja tas bija rakstīts ar roku kladē. <br> Papildus ieguvums no papīra kladēm ir — eksāmenos vai kontroldarbos, ja ir atļauts izmantot palīglīdzekļus, tad, visticamāk, tiem ir jābūt ar roku rakstītām, un tā kā visi pieraksti ir kladē, tos var ātri un ērti izmantot eksāmenā. Jo, ja pieraksti būtu elektroniskā veidā, tos būtu jāparaksta uz papīra, kas ir lieks darbs. Toties
+                papīra kladēm ir arī būtiskie mīnusi : tās sver ļoti daudz, it īpaši , ja tā ir liela A4 izmēra 96 lapušu klade. Tās ir viegli sabojāt mitrumā, kā arī tās grūti glabāt un vēl grūtāk tajās pēc tam kaut ko atrast, atšķirībā no digitālajiem , kuri ir pieejami dažu klikšķu brīdī.
+            </p>
+        </div>
     </div>
 
     <div class="row reverse">
-      <div class="text">
-        <p>Tomēr ir arī izaicinājumi — piemēram, ilgs laiks pie ekrāna nogurdina, un dažkārt rakstot ar roku idejas nostiprinās labāk. Tāpēc es cenšos sabalansēt abas pieejas, izmantojot papīru refleksijām un digitālos rīkus strukturētai informācijai.</p>
-      </div>
-      <div class="image">
-        <img src="digital_img.png" alt="Digitāla klade uz planšetes">
-      </div>
+        <div class="text">
+            <p>Taču universitāte ir laba ar to, ka lekcijās nav aizliegts lietot elektroniskās ierīces, atšķirībā no skolas, līdz ar to, tas ir labs veids, kā izmēģināt jaunas iespējas digitālai konspektu veidošanai. It īpaši dažos kursos ir grūti konspektēt kladē, jo, piemēram, ir daudz jāpārzīmē no slaidiem, bet elektroniskajā variantā var paņemt to gatavo shēmu vai zīmējumu un piezīmēt klāt kādas piezīmes.
+                Tā arī es darīju, es izvēlējos "OneNote" programmatūru, jo tā ir pieejama gan uz datora, gan uz telefona. Telefonā varēju nobildēt lekcijas slaidu un jau datorā to rediģēt, piezīmēt vai pierakstīt kaut ko klāt. Sanāca diezgan ērti, neskatoties uz to, ka man nav planšetes ar stilusu.</p>
+        </div>
+        <div class="image">
+            <img src="images/DIgitalie_pieraksti.png" alt="Digitāla klade uz planšetes">
+        </div>
     </div>
-  </div>
-
-  <footer>
-    <div class="contact">
-      <span>Kontakti | ✉</span> <a href="mailto:sr19062@edu.lu.lv">sr19062@edu.lu.lv</a>
-    </div>
-    <a href="kopienas.html">Nākamā →</a>
-  </footer>
+</div>
 </div>
 
-<style>
-  .zoom-section {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transform: scale(0.5);
-    opacity: 0;
-    background: white;
-    color: #333;
-    text-align: center;
-    padding: 60px 20px;
-    box-shadow: inset 0 0 0 2000px rgba(255, 255, 255, 0.65);
-  }
+<div class="card card2" id="card2" data-title="LU digitālās studentu kopienas (WhatsApp, Discord)">
+<div class="content">
+    <div class="row">
+        <div class="image">
+            <img src="images/whatsapp_img(croped).png" alt="WhatsApp grupas ekranuzņemums">
+        </div>
+        <div class="text">
+            <p>
+                Digitālās studentu kopienas ir ļoti laba iniciatīva no studentu pašpārvaldes, izveidojot vietni jeb grupu priekš studentiem, kur var apmainīties ar informāciju, jautāt un dalīties ar savu pieredzi. <br> Bieži vien tieši studenti ir viens otram vislielākais atbalsts, it īpaši studiju sākumā. <br> Pavisam kopā ir 3 WhatsApp grupas: viena priekš sarunām par visām tēmām, otra domāta sarunām par mācību tēmām, trešā — priekš kursa paziņojumiem.
+            </p>
+        </div>
+    </div>
 
-  .zoom-section h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
+    <div class="row reverse">
+        <div class="text">
+            <p>Papildus tam tika izveidota "Discord" grupa, kurā ir ērtāk sazināties ar citiem kursabiedriem. Grupā ir vairākas apakšnodaļas, kas sadalītas pēc katra priekšmeta jeb kursa kur var uzdot jautājumus vai palīdzēt citiem. Tāpat ir arī apakšnodaļas uz neformālām tēmām, kur var atrast biedrus, ar kuriem kopā spēlēt dažādas datorspēles. Kādreiz notika arī virtuālais Valentīna dienas iepazīšanās pasākums. Šajā kopienā ir pieejami arī audio kanāli, kur var sazvanīties un sarunāties, nevis tikai rakstīt tērzētavā.
 
-  .zoom-section p {
-    max-width: 800px;
-    font-size: 18px;
-    text-align: justify;
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
+                Īpaši "Discord" grupa man bija vislielākais atklājums — tas parādīja, ka liels kurss, kurā sākumā bija gandrīz 300 studentu, tomēr var kļūt par saliedētu, draudzīgu un izpalīdzīgu kopienu, neskatoties uz lielo cilvēku skaitu.</p>
+        </div>
+        <div class="image">
+            <img src="images/discord_screenshot.png" alt="Discord grupas ekranuzņemums">
+        </div>
+    </div>
+</div>
+</div>
 
-  .spacer {
-    height: 200vh;
-    background-color: #f4f4f4;
-  }
-</style>
+<div class="card card3" id="card3" data-title="Digitālā komunikācija ar pasniedzējiem un tiešsaistes lekcijas">
+<div class="content">
+    <div class="row">
+        <div class="image">
+            <img src="images/outlook_LU.png" alt="Latvijas universitātes e-pasta konta demonstrācija">
+        </div>
+        <div class="text">
+            <p>
+                Latvijas Universitātes digitālā vide ļauj sazināties ar pasniedzējiem daudz ātrāk un ērtāk nekā tradicionāli pēc lekcijām vai konsultācijām. Svarīgākā un galvenā saziņas forma ir e-pasts, bet tiek izmantota arī Moodle tērzētava vai MS Teams tērzētava. Pasniedzēji cenšas atbildēt laikus, taču tas var atšķirties atkarībā no cilvēka un noslodzes. Daži ir ļoti pieejami un iesaistās diskusijās, citi – mazāk. Galvenais ir rakstīt vēstules laikus un negaidīt līdz pēdējām momentam.
+                Parasti 1-2 dienas pietiek, lai sagaidītu atbildi. Visiem pasniedzējiem e-pasts ir zināmā šablonā: vārds.uzvārds@lu.lv, līdz ar to, tos viegli atcerēties. Šāda digitālā pieeja komunikācijai ar pasniedzējiem sniedz studentiem lielāku elastību un ērtību.
+            </p>
+        </div>
+    </div>
 
-<script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
-<script src="https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <div class="row reverse">
+        <div class="text">
+            <p>Tiešsaistes lekcijas ir kļuvušas par normu, īpaši lieliem kursiem. Piemēram, kursā "Veselības traucējumi bērniem" pierakstījās apmēram 500 studentu, kurus fiziski nevarētu iesēdināt vienā telpā. Tiešsaistes lekcijas, no vienas puses, tas ļauj ietaupīt laiku un pārlūkot ierakstus vēlāk, ja paliek kādas neskaidrības. No otras puses, pietrūkst dzīvas mijiedarbības. Dažreiz ir grūti saglabāt uzmanību un iesaistīties bez acu pret aci kontaktu ar pasniedzēju.
+                Bet, toties, tas ir subjektīvi un atkarīgs no katra cilvēka. Tiešsaistēs lekcijas kļūst noderīgas arī tad, kad nav iespējams kādu iemeslu dēļ apmeklēt lekciju klātienē, jo tas, protams, ir labāk, nekā vispār neklausīties.</p>
+        </div>
+        <div class="image">
+            <img src="images/teams.png" alt="Microsoft teams, kas tiek izmantots Latvijas Universitātē">
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="card card4" id="card4" data-title="Digitālā detoksikācija — cik svarīgi ir atslēgties no ekrāniem?">
+<div class="content">
+    <div class="row">
+        <div class="image">
+            <img src="images/IMG_20250531_224608_552_edit.jpg" alt="Digitālās detoksikācijas demonstrācija">
+        </div>
+        <div class="text">
+            <p>Studējot digitāli, ir viegli nonākt situācijā, kur diena paiet pie ekrāna — lekcijas, uzdevumi, komunikācija, izklaide. Papildus tam vēl pievienojas darbs sfērā, kas arī saistīts ar laika pavadīšanu pie ekrāniem. No šādas noslodzes es sāku justies pārslogots un noguris, un sapratu, ka man vajag digitālo digitālo detoksikāciju.</p>
+            <p>Tagad es cenšos katru dienu veltīt vismaz pāris stundu laika bez ekrāniem. Ejot pastaigās, sportojot vai vienkārši lasot grāmatu papīra formātā, es jūtos atjaunots. Tas palīdz arī mācībās — pēc pauzes varu koncentrēties daudz labāk. Godīgi sakot, tas iespējams ne katru dienu, it īpaši tuvojoties semestra beigām. </p>
+        </div>
+    </div>
+
+    <div class="row reverse">
+        <div class="text">
+            <p>Mēs, kā datorikas studenti, īpaši ilgi pavadām laiku pie ekrāniem, līdz ar to, ir jāspēj savā brīvā laikā pareizi un efektīvi atslēgties no studijām un darbiem, lai veltītu laiku sev, savai veselībai un ģimenei.</p>
+            <p>Būtu lieliski, ja universitāte varētu veicināt šo praksi, piedāvājot "bezekrāna dienas", "datora ergonomikas" pasākumus vai citas līdzīgas aktivitātes, kas notiek ārpus tiešsaistes vides, līdzīgas sporta dienām, piemēram, kuras notiek katru gadu LU. Tikai ar nedaudz citādu temātiku. Digitālais ir svarīgs, bet līdzsvars un spēja to saglabāt — vēl svarīgāks.</p>
+        </div>
+        <div class="image">
+            <img src="images/IMG_20250531_235349_276.jpg" alt="Digitālās detoksikācijas demonstrācija">
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="card card5" id="card5" data-title="Digitālā nākotne LU — ko es sagaidu pēc 10 gadiem?">
+<div class="content">
+    <div class="row">
+        <div class="image">
+            <img src="images/IMG_20250531_224552_987.jpg" alt="Latvijas Universitātes akademiska centra foto">
+        </div>
+        <div class="text">
+            <p>Esmu pārliecināts, ka LU nākotnē kļūs vēl digitālākā un pieejamākā. Ceru, ka studenti varēs izmantot mākslīgo intelektu, lai personalizētu savus mācību ceļus, saņemtu tūlītēju atgriezenisko saiti un labāk saprastu savas stiprās un vājās puses.
+            <p>Vēlos redzēt arī esošās sistēmas pamata pārbūvi. LUIS sistēma ir ļoti veca un sarežģīta, bet ceru, ka to galu galā izdosies uzlabot nākamo desmit gadu laikā ar esošās IT komandas palīdzību.</p>
+            <p>Kā arī gribētos, lai pašreizējais ambiciozais projekts - studentu kampusa uzbūve Pārdaugavā - pakāpeniski attīstītos un līdz nākamajai desmitgadei būtu gandrīz pabeigts.</p>
+        </div>
+    </div>
+
+    <div class="row reverse">
+        <div class="text">
+            <p>Ceru, ka Latvijas Universitāte spēs pielāgoties jaunumiem gan digitālajā pasaulē, gan zināšanās un mācību procesā, spēs mainīt un pielāgot studiju programmas un to saturu, lai zināšanas paliktu aktuālas un pieprasītas.</p>
+            <p>Digitālā nākotne — tas nav tikai tehnoloģiju jautājums, bet arī attieksmes un cilvēku jautājums. Es ceru, ka LU saglabās cilvēku tuvumu arī digitālajā laikmetā.</p>
+        </div>
+        <div class="image">
+            <img src="images/IMG_20250531_224232_420_croped.jpg" alt="Latvijas Universitātes rakstu mājas vizualizācija">
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<footer>
+    <div class="contact">
+        <span>Kontakti | ✉</span> <a href="mailto:sr19062@edu.lu.lv">sr19062@edu.lu.lv</a>
+    </div>
+    <a href="kopienas.html">Nākamā →</a>
+</footer>
+<script src="theme-switcher.js"></script>
 <script>
-  gsap.registerPlugin(ScrollTrigger);
+    function showCard(index) {
+        const card = document.querySelector(`.card:nth-child(${index})`);
+        if (card) {
+            card.scrollIntoView({ behavior: "smooth" });
+        }
+    }
 
-  const zoomSections = document.querySelectorAll(".zoom-section");
-  const spacers = document.querySelectorAll(".spacer");
+    const cards = document.querySelectorAll('.card');
+    const navButtons = document.querySelectorAll('#desktop-nav button');
+    const mobileButtons = document.querySelectorAll('#mobileMenu button');
 
-  zoomSections.forEach((section, i) => {
-    gsap.to(section, {
-      scrollTrigger: {
-        trigger: spacers[i],
-        start: "top bottom",
-        end: "top top",
-        scrub: true,
-      },
-      scale: 1,
-      opacity: 1,
-      ease: "power2.out"
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = Array.from(cards).indexOf(entry.target) + 1;
+                const navBtn = document.querySelector(`#desktop-nav button[onclick="showCard(${index})"]`);
+                const mobileBtn = document.querySelector(`#mobileMenu button[onclick="showCard(${index})"]`);
+
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                mobileButtons.forEach(btn => btn.classList.remove('active'));
+
+                if (navBtn) navBtn.classList.add('active');
+                if (mobileBtn) mobileBtn.classList.add('active');
+
+                // Обновление заголовка
+                const newTitle = entry.target.getAttribute('data-title');
+                const headerTitle = document.querySelector('header h1');
+                if (newTitle && headerTitle) {
+                    headerTitle.textContent = newTitle;
+                }
+            }
+        });
+    }, {
+        threshold: 0.6
     });
-  });
+
+    cards.forEach(card => observer.observe(card));
+
+        window.addEventListener("load", () => {
+        const intro = document.getElementById("intro-screen");
+        setTimeout(() => {
+        intro.style.opacity = "0";
+        intro.style.visibility = "hidden";
+    }, 2200); // saskaņots ar .intro-text animāciju ilgumu
+    });
+
+
 </script>
 
 </body>
