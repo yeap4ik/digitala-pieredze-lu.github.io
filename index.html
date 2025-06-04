@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="lv">
+<iframe id="preloadPage" src="index2.html" style="display: none;"></iframe>
+
 <head>
   <meta charset="UTF-8">
   <title>Mana digitālā pieredze LU</title>
@@ -125,15 +127,7 @@
     );
   });
 
-  document.getElementById("nextButton").addEventListener("click", function (e) {
-    e.preventDefault();
 
-    document.body.classList.add("fade-out");
-
-    setTimeout(function () {
-      window.location.href = "index2.html";
-    }, 1000);
-  });
 
 
   window.addEventListener("load", () => {
@@ -183,8 +177,17 @@
     updateBackground();
   });
 
-    // Установим начальное изображение
     updateBackground();
+
+  document.getElementById("nextButton").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    document.body.classList.add("fade-out");
+
+    setTimeout(function () {
+      window.location.href = "index2.html";
+    }, 1000);
+  });
 
 </script>
 

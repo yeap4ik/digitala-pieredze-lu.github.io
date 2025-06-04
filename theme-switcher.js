@@ -9,7 +9,6 @@ function setTheme(dark) {
     localStorage.setItem('theme', dark ? 'dark' : 'light');
 }
 
-// Начальная установка темы
 const savedTheme = localStorage.getItem('theme');
 const useDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
 setTheme(useDark);

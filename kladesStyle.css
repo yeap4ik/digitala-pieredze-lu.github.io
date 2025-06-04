@@ -18,7 +18,6 @@ h1, h2, h3, h4, h5, h6 {
 
 
 
-/* Мобильная адаптация */
 @media (max-width: 860px) {
 
     #card1, #card2, #card3, #card4, #card5 {
@@ -55,24 +54,24 @@ h1, h2, h3, h4, h5, h6 {
 
     #card1 .image, #card2 .image, #card3 .image, #card4 .image, #card5 .image,
     #card1-reverse .image, #card2-reverse .image, #card3-reverse .image, #card4-reverse .image, #card5-reverse .image {
-        margin-bottom: 4px !important; /* минимальный отступ под фото */
+        margin-bottom: 4px !important;
     }
 
     #card1 .text, #card2 .text, #card3 .text, #card4 .text, #card5 .text,
     #card1-reverse .text, #card2-reverse .text, #card3-reverse .text, #card4-reverse .text, #card5-reverse .text {
-        margin-top: 4px !important; /* минимальный отступ сверху у текста */
+        margin-top: 4px !important;
     }
 
     #card1, #card2, #card3, #card4, #card5 {
-        margin-bottom: 8px !important; /* очень маленький промежуток */
+        margin-bottom: 8px !important;
     }
 
     #card1-reverse, #card2-reverse, #card3-reverse, #card4-reverse, #card5-reverse {
-        margin-top: 8px !important; /* маленький отступ сверху */
+        margin-top: 8px !important;
     }
 
     .card {
-        margin-bottom: 20px !important; /* отступ между карточками */
+        margin-bottom: 20px !important;
     }
 
     .card-container {
@@ -93,7 +92,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .card::before {
-        display: none; /* отключить фон-параллакс */
+        display: none;
     }
 
     header,
@@ -110,7 +109,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .row.reverse {
-        flex-direction: column; /* отменяем reverse на мобилке */
+        flex-direction: column;
     }
 
     .row, .row.reverse {
@@ -133,7 +132,6 @@ h1, h2, h3, h4, h5, h6 {
         color: #99FFFF;
         padding: 10px;
         cursor: pointer;
-        /*position: absolute;*/
         top: 15px;
     }
 
@@ -172,7 +170,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     body.menu-open header h1 {
-        margin-left: 210px; /* ширина меню + небольшой отступ */
+        margin-left: 210px;
         width: calc(100% - 210px);
     }
 
@@ -187,12 +185,6 @@ h1, h2, h3, h4, h5, h6 {
         width: 100%;
         max-width: 100%;
     }
-
-    /*.image, .text {*/
-    /*    width: 100%;*/
-    /*    max-width: 100%;*/
-    /*    margin: 10px 0;*/
-    /*}*/
 
     #mobileMenu button.active {
         background-color: #99FFFF;
@@ -332,7 +324,6 @@ footer .contact {
 }
 
 
-/* Dark theme */
 body.dark-theme {
     background-color: #0D1117;
 }
@@ -384,7 +375,6 @@ body.dark-theme .content {
     background-color: #0D1117;
 }
 
-/* Кнопка переключения темы */
 #theme-toggle {
     background: none;
     border: none;

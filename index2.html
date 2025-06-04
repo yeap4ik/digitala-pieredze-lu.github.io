@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             scroll-behavior: smooth;
-            height: auto; /* или убери height вовсе */
+            height: auto;
             overflow-x: hidden;
         }
 
@@ -40,7 +40,7 @@
             height: 100%;
             padding: 2rem;
             box-sizing: border-box;
-            transform: translateZ(0); /* Foreground layer */
+            transform: translateZ(0);
             z-index: 2;
         }
 
@@ -53,7 +53,7 @@
             width: 100%;
             background-size: cover;
             background-position: center;
-            transform: translateZ(-1px) scale(2); /* Background parallax layer */
+            transform: translateZ(-1px) scale(2);
             z-index: 1;
             opacity: 0.3;
         }
@@ -68,16 +68,16 @@
             scroll-snap-type: y mandatory;
             perspective: 1px;
             transform-style: preserve-3d;
-            overflow: visible; /* по умолчанию, можно не указывать */
+            overflow: visible;
         }
 
         .card {
             height: 100vh;
-            padding-bottom: 60px; /* высота footer */
+            padding-bottom: 60px;
             box-sizing: border-box;
         }
         #card1{
-            padding-top: 150px !important;  /* высота header */
+            padding-top: 150px !important;
         }
 
         header {
@@ -279,7 +279,6 @@
     let currentIndex = 0;
     let isScrolling = false;
 
-    // Функция скролла по карточкам
     function scrollToCard(index) {
         if (index < 0 || index >= cards.length) return;
 
@@ -303,7 +302,7 @@
 
     window.addEventListener('wheel', (e) => {
         if (window.innerWidth >= 768) {
-            return; // на ПК твой текущий умный скролл
+            return;
         }
 
         if (isScrolling) return;
@@ -318,22 +317,18 @@
         const headerHeight = header ? header.offsetHeight : 0;
 
         if (e.deltaY > 0) {
-            // Скролл вниз - как уже сделал
             const atBottomOfReverseRow = rect.bottom <= windowHeight + 10;
             if (atBottomOfReverseRow) {
                 e.preventDefault();
                 scrollToCard(currentIndex + 1);
             }
         } else if (e.deltaY < 0) {
-            // Скролл вверх
-            // Проверяем, достигли ли верхней границы .row.reverse
-            const atTopOfReverseRow = rect.top >= headerHeight - 10; // небольшой запас
+            const atTopOfReverseRow = rect.top >= headerHeight - 10;
 
             if (atTopOfReverseRow) {
                 e.preventDefault();
                 scrollToCard(currentIndex - 1);
             }
-            // Иначе обычный скролл - просто ничего не блокируем
         }
     }, { passive: false });
 
@@ -361,7 +356,7 @@
         if (e.touches.length === 1) {
             startY = e.touches[0].clientY;
         }
-    }, { passive: true }); // touchstart может быть пассивным
+    }, { passive: true });
 
     window.addEventListener('touchmove', e => {
         if (window.innerWidth >= 768 || isScrolling) return;
@@ -382,24 +377,23 @@
         if (deltaY > 30) {
             const atBottomOfReverseRow = rect.bottom <= windowHeight + 10;
             if (atBottomOfReverseRow) {
-                e.preventDefault(); // теперь работает корректно
+                e.preventDefault();
                 scrollToCard(currentIndex + 1);
                 startY = null;
             }
         } else if (deltaY < -30) {
             const atTopOfReverseRow = rect.top >= headerHeight - 10;
             if (atTopOfReverseRow) {
-                e.preventDefault(); // теперь работает корректно
+                e.preventDefault();
                 scrollToCard(currentIndex - 1);
                 startY = null;
             }
         }
-    }, { passive: false }); // здесь passive:false чтобы можно было preventDefault
+    }, { passive: false });
 
 
     window.addEventListener('wheel', (e) => {
         if (window.innerWidth < 768) {
-            // На мобильных умный скролл отключён — обычный скролл
             return;
         }
 
@@ -420,17 +414,14 @@
             if (entry.isIntersecting) {
                 currentIndex = Array.from(cards).indexOf(entry.target);
 
-                // Обновляем кнопки в десктоп навигации
                 const navBtn = document.querySelector(`#desktop-nav button[onclick="showCard(${currentIndex + 1})"]`);
                 navButtons.forEach(btn => btn.classList.remove('active'));
                 if (navBtn) navBtn.classList.add('active');
 
-                // Обновляем кнопки в мобильном меню (гамбургер)
                 const mobileBtn = document.querySelector(`#mobileMenu button[onclick="showCard(${currentIndex + 1})"]`);
                 mobileButtons.forEach(btn => btn.classList.remove('active'));
                 if (mobileBtn) mobileBtn.classList.add('active');
 
-                // Меняем заголовок
                 const newTitle = entry.target.getAttribute('data-title');
                 const headerTitle = document.querySelector('header h1');
                 if (newTitle && headerTitle) {
@@ -440,7 +431,7 @@
         });
     }, {
         root: null,
-        threshold: window.innerWidth < 768 ? 0.3 : 0.6 // Меньший порог для мобилки
+        threshold: window.innerWidth < 768 ? 0.3 : 0.6
     });
 
     cards.forEach(card => observer.observe(card));
