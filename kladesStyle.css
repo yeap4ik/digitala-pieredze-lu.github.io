@@ -16,13 +16,94 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
 }
 
+
+
 /* Мобильная адаптация */
 @media (max-width: 860px) {
+
+    #card1, #card2, #card3, #card4, #card5 {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    #card1-reverse, #card2-reverse, #card3-reverse, #card4-reverse, #card5-reverse {
+        display: flex !important;
+        flex-direction: column-reverse !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+
+    #card1 .image, #card2 .image, #card3 .image, #card4 .image, #card5 .image,
+    #card1 .text, #card2 .text, #card3 .text, #card4 .text, #card5 .text,
+    #card1-reverse .image, #card2-reverse .image, #card3-reverse .image, #card4-reverse .image, #card5-reverse .image,
+    #card1-reverse .text, #card2-reverse .text, #card3-reverse .text, #card4-reverse .text, #card5-reverse .text {
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    #card1 img, #card2 img, #card3 img, #card4 img, #card5 img,
+    #card1-reverse img, #card2-reverse img, #card3-reverse img, #card4-reverse img, #card5-reverse img {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+    }
+
+    .card-container {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .card .content {
+        position: static;
+        transform: none;
+        height: auto;
+        padding: 1rem;
+    }
+
+    .card {
+        height: 200vh !important;
+        scroll-snap-align: start;
+    }
+
+    .card::before {
+        display: none; /* отключить фон-параллакс */
+    }
+
+    header,
+    footer {
+        position: static;
+    }
+
+    nav a {
+        position: static;
+    }
+
     nav#desktop-nav {
         display: none;
     }
 
+    .row.reverse {
+        flex-direction: column; /* отменяем reverse на мобилке */
+    }
+
+    .row, .row.reverse {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
     .mobile-nav-toggle {
+        position: relative;
+        margin-bottom: 5px;
+        left: 15px;
+        right: auto;
+        z-index: 1001;
         display: block;
         background: none;
         border: none;
@@ -30,22 +111,24 @@ h1, h2, h3, h4, h5, h6 {
         color: #99FFFF;
         padding: 10px;
         cursor: pointer;
-        position: absolute;
+        /*position: absolute;*/
         top: 15px;
-        right: 15px;
-        z-index: 1000;
     }
 
+
+
+
     .mobile-menu {
+        top: 60px;
+        left: 0;
+        right: auto;
         display: none;
         flex-direction: column;
         background-color: #0000CC;
         position: absolute;
-        top: 60px;
-        right: 0;
         width: 200px;
         padding: 10px;
-        z-index: 999;
+        z-index: 1000;
     }
 
     .mobile-menu a,
@@ -59,14 +142,40 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1rem;
     }
 
-    .row,
-    .row.reverse {
-        flex-direction: column;
-        align-items: center;
+    header {
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding-left: 15px !important;
+    }
+
+    body.menu-open header h1 {
+        margin-left: 210px; /* ширина меню + небольшой отступ */
+        width: calc(100% - 210px);
+    }
+
+    header h1 {
+        flex: 1;
+        margin: 0;
+        font-size: 1.5rem;
+        transition: margin-left 0.3s ease, width 0.3s ease;
     }
 
     .image, .text {
+        width: 100%;
         max-width: 100%;
+    }
+
+    /*.image, .text {*/
+    /*    width: 100%;*/
+    /*    max-width: 100%;*/
+    /*    margin: 10px 0;*/
+    /*}*/
+
+    #mobileMenu button.active {
+        background-color: #99FFFF;
+        color: red;
+        font-weight: bold;
     }
 }
 
@@ -181,6 +290,8 @@ footer .contact {
     margin: 5px 0;
 }
 
+
+
 #desktop-nav button {
     border: none;
     font-size: 1rem;
@@ -197,6 +308,7 @@ footer .contact {
     color: #0000CC;
     font-weight: bold;
 }
+
 
 /* Dark theme */
 body.dark-theme {

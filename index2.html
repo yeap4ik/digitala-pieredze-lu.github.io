@@ -123,19 +123,19 @@
     <button id="theme-toggle" aria-label="Pārslēgt tēmu">🌞</button>
 </nav>
 
-<button class="mobile-nav-toggle" onclick="toggleMobileMenu()">☰</button>
+<button class="mobile-nav-toggle">☰</button>
 <div class="mobile-menu" id="mobileMenu">
-    <button onclick="showCard(9)">Uz sākumu</button>
+    <button onclick="showCard(10)" id="backToIndexButton2">Uz sākumu</button>
     <button onclick="showCard(1)">1. Klades</button>
     <button onclick="showCard(2)">2. Kopienas</button>
     <button onclick="showCard(3)">3. Komunikācija</button>
     <button onclick="showCard(4)">4. Detoksikācija</button>
     <button onclick="showCard(5)">5. Nākotne</button>
-    <button onclick="toggleTheme()" id="mobile-theme-toggle">🌞</button>
+    <button id="theme-toggle2" aria-label="Pārslēgt tēmu">🌞</button>
 </div>
 </header>
 
-<div class="card-container">
+<div class="card-container" id="cards-wrapper">
 <div class="card card1" id="card1" data-title="KLADES — PĀREJA NO PAPĪRA UZ DIGITĀLO">
 <div class="content">
     <div class="row">
@@ -150,7 +150,7 @@
         </div>
     </div>
 
-    <div class="row reverse">
+    <div class="row reverse" id="card1-reverse">
         <div class="text">
             <p>Taču universitāte ir laba ar to, ka lekcijās nav aizliegts lietot elektroniskās ierīces, atšķirībā no skolas, līdz ar to, tas ir labs veids, kā izmēģināt jaunas iespējas digitālai konspektu veidošanai. It īpaši dažos kursos ir grūti konspektēt kladē, jo, piemēram, ir daudz jāpārzīmē no slaidiem, bet elektroniskajā variantā var paņemt to gatavo shēmu vai zīmējumu un piezīmēt klāt kādas piezīmes.
                 Tā arī es darīju, es izvēlējos "OneNote" programmatūru, jo tā ir pieejama gan uz datora, gan uz telefona. Telefonā varēju nobildēt lekcijas slaidu un jau datorā to rediģēt, piezīmēt vai pierakstīt kaut ko klāt. Sanāca diezgan ērti, neskatoties uz to, ka man nav planšetes ar stilusu.</p>
@@ -175,7 +175,7 @@
         </div>
     </div>
 
-    <div class="row reverse">
+    <div class="row reverse" id="card2-reverse">
         <div class="text">
             <p>Papildus tam tika izveidota "Discord" grupa, kurā ir ērtāk sazināties ar citiem kursabiedriem. Grupā ir vairākas apakšnodaļas, kas sadalītas pēc katra priekšmeta jeb kursa kur var uzdot jautājumus vai palīdzēt citiem. Tāpat ir arī apakšnodaļas uz neformālām tēmām, kur var atrast biedrus, ar kuriem kopā spēlēt dažādas datorspēles. Kādreiz notika arī virtuālais Valentīna dienas iepazīšanās pasākums. Šajā kopienā ir pieejami arī audio kanāli, kur var sazvanīties un sarunāties, nevis tikai rakstīt tērzētavā.
 
@@ -202,7 +202,7 @@
         </div>
     </div>
 
-    <div class="row reverse">
+    <div class="row reverse" id="card3-reverse">
         <div class="text">
             <p>Tiešsaistes lekcijas ir kļuvušas par normu, īpaši lieliem kursiem. Piemēram, kursā "Veselības traucējumi bērniem" pierakstījās apmēram 500 studentu, kurus fiziski nevarētu iesēdināt vienā telpā. Tiešsaistes lekcijas, no vienas puses, tas ļauj ietaupīt laiku un pārlūkot ierakstus vēlāk, ja paliek kādas neskaidrības. No otras puses, pietrūkst dzīvas mijiedarbības. Dažreiz ir grūti saglabāt uzmanību un iesaistīties bez acu pret aci kontaktu ar pasniedzēju.
                 Bet, toties, tas ir subjektīvi un atkarīgs no katra cilvēka. Tiešsaistēs lekcijas kļūst noderīgas arī tad, kad nav iespējams kādu iemeslu dēļ apmeklēt lekciju klātienē, jo tas, protams, ir labāk, nekā vispār neklausīties.</p>
@@ -226,7 +226,7 @@
         </div>
     </div>
 
-    <div class="row reverse">
+    <div class="row reverse" id="card4-reverse">
         <div class="text">
             <p>Mēs, kā datorikas studenti, īpaši ilgi pavadām laiku pie ekrāniem, līdz ar to, ir jāspēj savā brīvā laikā pareizi un efektīvi atslēgties no studijām un darbiem, lai veltītu laiku sev, savai veselībai un ģimenei.</p>
             <p>Būtu lieliski, ja universitāte varētu veicināt šo praksi, piedāvājot "bezekrāna dienas", "datora ergonomikas" pasākumus vai citas līdzīgas aktivitātes, kas notiek ārpus tiešsaistes vides, līdzīgas sporta dienām, piemēram, kuras notiek katru gadu LU. Tikai ar nedaudz citādu temātiku. Digitālais ir svarīgs, bet līdzsvars un spēja to saglabāt — vēl svarīgāks.</p>
@@ -251,7 +251,7 @@
         </div>
     </div>
 
-    <div class="row reverse">
+    <div class="row reverse" id="card5-reverse">
         <div class="text">
             <p>Ceru, ka Latvijas Universitāte spēs pielāgoties jaunumiem gan digitālajā pasaulē, gan zināšanās un mācību procesā, spēs mainīt un pielāgot studiju programmas un to saturu, lai zināšanas paliktu aktuālas un pieprasītas.</p>
             <p>Digitālā nākotne — tas nav tikai tehnoloģiju jautājums, bet arī attieksmes un cilvēku jautājums. Es ceru, ka LU saglabās cilvēku tuvumu arī digitālajā laikmetā.</p>
@@ -279,6 +279,7 @@
     let currentIndex = 0;
     let isScrolling = false;
 
+    // Функция скролла по карточкам
     function scrollToCard(index) {
         if (index < 0 || index >= cards.length) return;
 
@@ -295,37 +296,43 @@
 
         setTimeout(() => {
             isScrolling = false;
-        }, 700); // длительность скролла (можно изменить)
+        }, 700);
     }
 
     window.addEventListener('wheel', (e) => {
+        if (window.innerWidth < 768) {
+            // На мобильных умный скролл отключён — обычный скролл
+            return;
+        }
+
         if (isScrolling) return;
 
-        if (e.deltaY > 20) {
+        if (e.deltaY > 50) {
             scrollToCard(currentIndex + 1);
-        } else if (e.deltaY < -20) {
+        } else if (e.deltaY < -50) {
             scrollToCard(currentIndex - 1);
         }
     }, { passive: true });
 
-    // Интерсекшн Обсервер — обновление навигации и заголовка
     const navButtons = document.querySelectorAll('#desktop-nav button');
     const mobileButtons = document.querySelectorAll('#mobileMenu button');
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                currentIndex = Array.from(cards).indexOf(entry.target); // обновляем индекс
+                currentIndex = Array.from(cards).indexOf(entry.target);
 
+                // Обновляем кнопки в десктоп навигации
                 const navBtn = document.querySelector(`#desktop-nav button[onclick="showCard(${currentIndex + 1})"]`);
-                const mobileBtn = document.querySelector(`#mobileMenu button[onclick="showCard(${currentIndex + 1})"]`);
-
                 navButtons.forEach(btn => btn.classList.remove('active'));
-                mobileButtons.forEach(btn => btn.classList.remove('active'));
-
                 if (navBtn) navBtn.classList.add('active');
+
+                // Обновляем кнопки в мобильном меню (гамбургер)
+                const mobileBtn = document.querySelector(`#mobileMenu button[onclick="showCard(${currentIndex + 1})"]`);
+                mobileButtons.forEach(btn => btn.classList.remove('active'));
                 if (mobileBtn) mobileBtn.classList.add('active');
 
+                // Меняем заголовок
                 const newTitle = entry.target.getAttribute('data-title');
                 const headerTitle = document.querySelector('header h1');
                 if (newTitle && headerTitle) {
@@ -335,12 +342,11 @@
         });
     }, {
         root: null,
-        threshold: 0.6
+        threshold: window.innerWidth < 768 ? 0.3 : 0.6 // Меньший порог для мобилки
     });
 
     cards.forEach(card => observer.observe(card));
 
-    // intro screen
     window.addEventListener("load", () => {
         const intro = document.getElementById("intro-screen");
         setTimeout(() => {
@@ -352,16 +358,34 @@
     document.getElementById("backToIndexButton").addEventListener("click", function (e) {
         e.preventDefault();
         document.body.classList.add("fade-out");
-
         setTimeout(function () {
             window.location.href = "index.html";
         }, 1000);
     });
 
-    // Обновление кнопок при нажатии
+    document.getElementById("backToIndexButton2").addEventListener("click", function (e) {
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(function () {
+            window.location.href = "index.html";
+        }, 1000);
+    });
+
     window.showCard = function(index) {
         scrollToCard(index - 1);
     };
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.querySelector('.mobile-nav-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        toggleBtn.addEventListener('click', () => {
+            mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+        });
+    });
 </script>
 
 
