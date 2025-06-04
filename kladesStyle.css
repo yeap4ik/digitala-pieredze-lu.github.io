@@ -53,6 +53,28 @@ h1, h2, h3, h4, h5, h6 {
         max-width: 100% !important;
     }
 
+    #card1 .image, #card2 .image, #card3 .image, #card4 .image, #card5 .image,
+    #card1-reverse .image, #card2-reverse .image, #card3-reverse .image, #card4-reverse .image, #card5-reverse .image {
+        margin-bottom: 4px !important; /* минимальный отступ под фото */
+    }
+
+    #card1 .text, #card2 .text, #card3 .text, #card4 .text, #card5 .text,
+    #card1-reverse .text, #card2-reverse .text, #card3-reverse .text, #card4-reverse .text, #card5-reverse .text {
+        margin-top: 4px !important; /* минимальный отступ сверху у текста */
+    }
+
+    #card1, #card2, #card3, #card4, #card5 {
+        margin-bottom: 8px !important; /* очень маленький промежуток */
+    }
+
+    #card1-reverse, #card2-reverse, #card3-reverse, #card4-reverse, #card5-reverse {
+        margin-top: 8px !important; /* маленький отступ сверху */
+    }
+
+    .card {
+        margin-bottom: 20px !important; /* отступ между карточками */
+    }
+
     .card-container {
         display: flex !important;
         flex-direction: column !important;
