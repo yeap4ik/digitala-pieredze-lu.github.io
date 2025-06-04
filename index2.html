@@ -6,33 +6,33 @@
     <meta name="description" content="LU students apraksta pāreju no papīra kladēm uz digitāliem rīkiem kā OneNote un Notion studiju laikā.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="kladesStyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
         html, body {
             margin: 0;
             padding: 0;
             scroll-behavior: smooth;
-            height: 100%;
+            height: auto; /* или убери height вовсе */
             overflow-x: hidden;
         }
 
         .card-container {
-            height: 100vh;
             width: 100%;
-            overflow-y: scroll;
             scroll-snap-type: y mandatory;
             perspective: 1px;
             transform-style: preserve-3d;
         }
 
         .card {
-            scroll-snap-align: start;
             height: 100vh;
             width: 100%;
+            scroll-snap-align: start;
             position: relative;
             overflow: hidden;
             transform-style: preserve-3d;
         }
+
 
         .card .content {
             position: absolute;
@@ -62,6 +62,45 @@
             opacity: 0;
             transition: opacity 1s ease;
         }
+
+        .card-container {
+            width: 100%;
+            scroll-snap-type: y mandatory;
+            perspective: 1px;
+            transform-style: preserve-3d;
+            overflow: visible; /* по умолчанию, можно не указывать */
+        }
+
+        .card {
+            height: 100vh;
+            padding-bottom: 60px; /* высота footer */
+            box-sizing: border-box;
+        }
+        #card1{
+            padding-top: 150px !important;  /* высота header */
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav a {
+            position: fixed;
+
+            width: 100%;
+            z-index: 1000;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
     </style>
 
 </head>
@@ -72,10 +111,9 @@
 
 <header>
     <h1>KLADES — PĀREJA NO PAPĪRA UZ DIGITĀLO</h1>
-</header>
+
 
 <nav id="desktop-nav">
-    <button onclick="showCard(99)">← Iepriekšējā</button>
     <button onclick="showCard(10)" id="backToIndexButton">Uz sākumu</button>
     <button onclick="showCard(1)">1. Klades</button>
     <button onclick="showCard(2)">2. Kopienas</button>
@@ -87,7 +125,6 @@
 
 <button class="mobile-nav-toggle" onclick="toggleMobileMenu()">☰</button>
 <div class="mobile-menu" id="mobileMenu">
-    <button onclick="showCard(99)">← Iepriekšējā</button>
     <button onclick="showCard(9)">Uz sākumu</button>
     <button onclick="showCard(1)">1. Klades</button>
     <button onclick="showCard(2)">2. Kopienas</button>
@@ -96,6 +133,7 @@
     <button onclick="showCard(5)">5. Nākotne</button>
     <button onclick="toggleTheme()" id="mobile-theme-toggle">🌞</button>
 </div>
+</header>
 
 <div class="card-container">
 <div class="card card1" id="card1" data-title="KLADES — PĀREJA NO PAPĪRA UZ DIGITĀLO">
@@ -231,27 +269,56 @@
     <div class="contact">
         <span>Kontakti | ✉</span> <a href="mailto:sr19062@edu.lu.lv">sr19062@edu.lu.lv</a>
     </div>
-    <a href="kopienas.html">Nākamā →</a>
 </footer>
 <script src="theme-switcher.js"></script>
 <script>
-    function showCard(index) {
-        const card = document.querySelector(`.card:nth-child(${index})`);
-        if (card) {
-            card.scrollIntoView({ behavior: "smooth" });
-        }
+    const cards = document.querySelectorAll('.card');
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.offsetHeight : 0;
+
+    let currentIndex = 0;
+    let isScrolling = false;
+
+    function scrollToCard(index) {
+        if (index < 0 || index >= cards.length) return;
+
+        isScrolling = true;
+        currentIndex = index;
+
+        const card = cards[currentIndex];
+        const top = card.getBoundingClientRect().top + window.scrollY - headerHeight;
+
+        window.scrollTo({
+            top: top,
+            behavior: 'smooth'
+        });
+
+        setTimeout(() => {
+            isScrolling = false;
+        }, 700); // длительность скролла (можно изменить)
     }
 
-    const cards = document.querySelectorAll('.card');
+    window.addEventListener('wheel', (e) => {
+        if (isScrolling) return;
+
+        if (e.deltaY > 20) {
+            scrollToCard(currentIndex + 1);
+        } else if (e.deltaY < -20) {
+            scrollToCard(currentIndex - 1);
+        }
+    }, { passive: true });
+
+    // Интерсекшн Обсервер — обновление навигации и заголовка
     const navButtons = document.querySelectorAll('#desktop-nav button');
     const mobileButtons = document.querySelectorAll('#mobileMenu button');
 
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const index = Array.from(cards).indexOf(entry.target) + 1;
-                const navBtn = document.querySelector(`#desktop-nav button[onclick="showCard(${index})"]`);
-                const mobileBtn = document.querySelector(`#mobileMenu button[onclick="showCard(${index})"]`);
+                currentIndex = Array.from(cards).indexOf(entry.target); // обновляем индекс
+
+                const navBtn = document.querySelector(`#desktop-nav button[onclick="showCard(${currentIndex + 1})"]`);
+                const mobileBtn = document.querySelector(`#mobileMenu button[onclick="showCard(${currentIndex + 1})"]`);
 
                 navButtons.forEach(btn => btn.classList.remove('active'));
                 mobileButtons.forEach(btn => btn.classList.remove('active'));
@@ -259,7 +326,6 @@
                 if (navBtn) navBtn.classList.add('active');
                 if (mobileBtn) mobileBtn.classList.add('active');
 
-                // Обновление заголовка
                 const newTitle = entry.target.getAttribute('data-title');
                 const headerTitle = document.querySelector('header h1');
                 if (newTitle && headerTitle) {
@@ -268,17 +334,19 @@
             }
         });
     }, {
+        root: null,
         threshold: 0.6
     });
 
     cards.forEach(card => observer.observe(card));
 
-        window.addEventListener("load", () => {
+    // intro screen
+    window.addEventListener("load", () => {
         const intro = document.getElementById("intro-screen");
         setTimeout(() => {
-        intro.style.opacity = "0";
-        intro.style.visibility = "hidden";
-    }, 2200); // saskaņots ar .intro-text animāciju ilgumu
+            intro.style.opacity = "0";
+            intro.style.visibility = "hidden";
+        }, 2200);
     });
 
     document.getElementById("backToIndexButton").addEventListener("click", function (e) {
@@ -289,7 +357,14 @@
             window.location.href = "index.html";
         }, 1000);
     });
+
+    // Обновление кнопок при нажатии
+    window.showCard = function(index) {
+        scrollToCard(index - 1);
+    };
 </script>
+
+
 
 </body>
 </html>

@@ -3,7 +3,7 @@ const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 function setTheme(dark) {
     document.body.classList.toggle('dark-theme', dark);
-    toggleBtn.textContent = dark ? '🌞' : '🌙';
+    toggleBtn.textContent = dark ? '🌞' : '🌚';
     localStorage.setItem('theme', dark ? 'dark' : 'light');
 }
 

@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="kladesStyle.css">
   <link rel="stylesheet" href="zoom-in-intro.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     .fade-out {
@@ -18,6 +19,49 @@
         transform: scale(0.95);
       }
     }
+
+    .bg-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      color: white;
+      background-color: rgba(0,0,0,0.4);
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      z-index: 10;
+      border-radius: 50%;
+      transition: background-color 0.3s ease;
+    }
+
+    .bg-nav:hover {
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .bg-nav.left {
+      left: 20px;
+    }
+
+    .bg-nav.right {
+      right: 20px;
+    }
+
+    .zoom-section::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, rgba(0, 0, 0, 0.5) 0%, rgba(0,0,0,0.3) 30%, rgba(0, 0, 0, 0) 70%);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .content1, h2 {
+        z-index: 2 !important;
+    }
+
   </style>
 
   <!-- GSAP CDN -->
@@ -43,20 +87,19 @@
 <!-- Zoom-in Section 1 -->
 <div class="zoom-section">
   <div class="content1">
-    <h2>Mana digitālā pieredze mācoties<br>Latvijas Universitātē</h2>
-    <p>Šis ir mikrobloga formāta projekts, kurā Latvijas Universitātes EZTF datorikas nodaļas students dalās ar savu digitālo pieredzi studiju laikā.</p>
-    <p>Mērķis ir palīdzēt nākamajiem un topošiem studentiem uzzināt vairāk un saprast, kā digitālie rīki, platformas un saziņas veidi ietekmē mācību procesu un atvieglo ikdienu Latvijas Universitātē.</p>
-    <p>Nākamajās lapās tiek apkopoti stāsti un pieredzes, kā arī tēmas, kuras autors uzskata par nozīmīgām un noderīgām, īpaši gatavojoties iestājai Latvijas Universitātē.</p>
-    <a class="next-button" id="nextButton" href="#">Tālāk</a>
-
+    <h1>Mana digitālā pieredze mācoties Latvijas Universitātē</h1>
+      <div class="text-box1">
+    <p>Šis ir mikrobloga formāta projekts, kurā Latvijas Universitātes EZTF<br>datorikas nodaļas students dalās ar savu digitālo pieredzi studiju laikā.
+    <br><br>Mērķis ir palīdzēt nākamajiem un topošiem studentiem uzzināt vairāk <br> un saprast, kā digitālie rīki, platformas un saziņas veidi ietekmē<br> mācību procesu un atvieglo ikdienu Latvijas Universitātē.
+    <br><br>Nākamajās lapās tiek apkopoti stāsti un pieredzes, kā arī tēmas, <br> kuras autors uzskata par nozīmīgām un noderīgām,<br> īpaši gatavojoties iestājai Latvijas Universitātē.</p>
+  </div>
+    <br><br><br>
+    <a class="next-button" id="nextButton" href="#">Lasīt</a>
+    <!-- Background image navigation arrows -->
+    <button class="bg-nav left">&#10094;</button>
+    <button class="bg-nav right">&#10095;</button>
   </div>
 </div>
-
-
-
-
-
-
 
 <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
@@ -100,6 +143,48 @@
       intro.style.visibility = "hidden";
     }, 2200);
   });
+
+    const zoomSection = document.querySelector('.zoom-section');
+    const bgImages = [
+    'images/background/IMG_20250531_145408_112.jpg',
+    'images/background/IMG_20250531_224232_420.jpg',
+    'images/background/IMG_20250531_224104_049.jpg',
+      'images/background/IMG_20220907_141940.jpg',
+      'images/background/IMG_20220914_200638.jpg',
+      'images/background/IMG_20220914_201320.jpg',
+      'images/background/IMG_20220914_202600.jpg',
+      'images/background/IMG_20221018_180623.jpg',
+      'images/background/IMG_20221019_134617.jpg',
+      'images/background/IMG_20221102_210459.jpg',
+      'images/background/IMG_20221102_211533.jpg',
+      'images/background/IMG_20230123_134953.jpg',
+      'images/background/IMG_20230412_160241.jpg',
+      'images/background/IMG_20230412_162433.jpg',
+      'images/background/IMG_20230412_175558.jpg',
+      'images/background/IMG_20231005_152251.jpg',
+      'images/background/IMG_20231012_182448.jpg',
+      'images/background/IMG_20231221_125911.jpg',
+      'images/background/IMG_20240111_085247.jpg'
+
+    ];
+    let bgIndex = 0;
+
+    function updateBackground() {
+    zoomSection.style.backgroundImage = `url('${bgImages[bgIndex]}')`;
+  }
+
+    document.querySelector('.bg-nav.left').addEventListener('click', () => {
+    bgIndex = (bgIndex - 1 + bgImages.length) % bgImages.length;
+    updateBackground();
+  });
+
+    document.querySelector('.bg-nav.right').addEventListener('click', () => {
+    bgIndex = (bgIndex + 1) % bgImages.length;
+    updateBackground();
+  });
+
+    // Установим начальное изображение
+    updateBackground();
 
 </script>
 

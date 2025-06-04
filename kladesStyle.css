@@ -1,4 +1,13 @@
-/* По умолчанию скрываем мобильные элементы */
+html, body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+
 .mobile-nav-toggle {
     display: none;
 }
@@ -125,6 +134,7 @@ nav a:hover {
 .text p {
     text-align: justify;
     line-height: 1.6;
+    font-size: 16px;
 }
 
 .image img {
@@ -143,10 +153,11 @@ footer {
     color: #F7F9FB;
     padding: 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     font-weight: bold;
 }
+
 
 footer a {
     color: white;
