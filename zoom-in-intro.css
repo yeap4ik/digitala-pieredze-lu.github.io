@@ -34,7 +34,7 @@ h1{
 
 .content1 h1{
     color: #33CCFF;
-    font-size: 40px;
+    font-size: 32px !important;
 }
 
 .content1 h3{
