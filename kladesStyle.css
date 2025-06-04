@@ -174,7 +174,7 @@ h1, h2, h3, h4, h5, h6 {
 
     #mobileMenu button.active {
         background-color: #99FFFF;
-        color: red;
+        color: #0000CC;
         font-weight: bold;
     }
 }
