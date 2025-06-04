@@ -101,7 +101,7 @@ h1, h2, h3, h4, h5, h6 {
     .mobile-nav-toggle {
         position: relative;
         margin-bottom: 5px;
-        left: 15px;
+        left: auto;
         right: auto;
         z-index: 1001;
         display: block;
@@ -119,7 +119,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
     .mobile-menu {
-        top: 60px;
+        top: 110px;
         left: 0;
         right: auto;
         display: none;
@@ -146,7 +146,7 @@ h1, h2, h3, h4, h5, h6 {
         height: auto !important;
         display: flex !important;
         flex-direction: column !important;
-        padding-left: 15px !important;
+        padding-left: 0px !important;
     }
 
     body.menu-open header h1 {
