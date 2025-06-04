@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="lv">
 <iframe id="preloadPage" src="index2.html" style="display: none;"></iframe>
+<link rel="preload" as="image" href="images/background/IMG_20250531_145408_112.jpg">
+<link rel="preload" as="image" href="images/background/IMG_20250531_224232_420.jpg">
+<link rel="preload" as="image" href="images/background/IMG_20250531_224104_049.jpg">
+<link rel="preload" as="image" href="images/background/IMG_20240111_085247.jpg">
+<link rel="preload" as="image" href="images/background/IMG_20231221_125911.jpg">
+
 
 <head>
   <meta charset="UTF-8">
@@ -106,11 +112,11 @@
 <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
 <script>
-  gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
 
-  const zoomSections = document.querySelectorAll(".zoom-section");
+    const zoomSections = document.querySelectorAll(".zoom-section");
 
-  zoomSections.forEach((section) => {
+    zoomSections.forEach((section) => {
     gsap.fromTo(section,
             { scale: 0.8, opacity: 0 },
             {
@@ -127,39 +133,27 @@
     );
   });
 
-
-
-
-  window.addEventListener("load", () => {
-    const intro = document.getElementById("intro-screen");
-    setTimeout(() => {
-      intro.style.opacity = "0";
-      intro.style.visibility = "hidden";
-    }, 2200);
-  });
-
     const zoomSection = document.querySelector('.zoom-section');
     const bgImages = [
     'images/background/IMG_20250531_145408_112.jpg',
     'images/background/IMG_20250531_224232_420.jpg',
     'images/background/IMG_20250531_224104_049.jpg',
-      'images/background/IMG_20220907_141940.jpg',
-      'images/background/IMG_20220914_200638.jpg',
-      'images/background/IMG_20220914_201320.jpg',
-      'images/background/IMG_20220914_202600.jpg',
-      'images/background/IMG_20221018_180623.jpg',
-      'images/background/IMG_20221019_134617.jpg',
-      'images/background/IMG_20221102_210459.jpg',
-      'images/background/IMG_20221102_211533.jpg',
-      'images/background/IMG_20230123_134953.jpg',
-      'images/background/IMG_20230412_160241.jpg',
-      'images/background/IMG_20230412_162433.jpg',
-      'images/background/IMG_20230412_175558.jpg',
-      'images/background/IMG_20231005_152251.jpg',
-      'images/background/IMG_20231012_182448.jpg',
-      'images/background/IMG_20231221_125911.jpg',
-      'images/background/IMG_20240111_085247.jpg'
-
+    'images/background/IMG_20220907_141940.jpg',
+    'images/background/IMG_20220914_200638.jpg',
+    'images/background/IMG_20220914_201320.jpg',
+    'images/background/IMG_20220914_202600.jpg',
+    'images/background/IMG_20221018_180623.jpg',
+    'images/background/IMG_20221019_134617.jpg',
+    'images/background/IMG_20221102_210459.jpg',
+    'images/background/IMG_20221102_211533.jpg',
+    'images/background/IMG_20230123_134953.jpg',
+    'images/background/IMG_20230412_160241.jpg',
+    'images/background/IMG_20230412_162433.jpg',
+    'images/background/IMG_20230412_175558.jpg',
+    'images/background/IMG_20231005_152251.jpg',
+    'images/background/IMG_20231012_182448.jpg',
+    'images/background/IMG_20231221_125911.jpg',
+    'images/background/IMG_20240111_085247.jpg'
     ];
     let bgIndex = 0;
 
@@ -177,18 +171,51 @@
     updateBackground();
   });
 
+    const imageCache = [];
+
+    function preloadImages(urls, delay = 500) {
+    let index = 0;
+    function loadNext() {
+    if (index >= urls.length) return;
+
+    const img = new Image();
+    img.src = urls[index];
+    imageCache.push(img);
+    index++;
+
+    setTimeout(loadNext, delay);
+  }
+    loadNext();
+  }
+
+    window.addEventListener("load", () => {
+    const intro = document.getElementById("intro-screen");
+
+    setTimeout(() => {
+    intro.style.opacity = "0";
+    intro.style.visibility = "hidden";
+
+    preloadImages(bgImages, 300);
+
+    setTimeout(() => {
+    const iframe = document.getElementById("preloadPage");
+    iframe.src = "index2.html";
+  }, 500);
+
     updateBackground();
 
-  document.getElementById("nextButton").addEventListener("click", function (e) {
+  }, 2200);
+  });
+
+    document.getElementById("nextButton").addEventListener("click", function (e) {
     e.preventDefault();
 
     document.body.classList.add("fade-out");
 
     setTimeout(function () {
-      window.location.href = "index2.html";
-    }, 1000);
+    window.location.href = "index2.html";
+  }, 1000);
   });
-
 </script>
 
 
